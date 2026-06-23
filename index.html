@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ru" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta
+      name="description"
+      content="Выберите welcome-бонус RolsBet для Казино или Спорта и крутите колесо."
+    />
+    <title>RolsBet — Колесо бонусов</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-mode="casino">
+    <div class="page-shell">
+      <div class="ambient ambient-one"></div>
+      <div class="ambient ambient-two"></div>
+      <div class="noise"></div>
+
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="RolsBet">
+          <img src="./assets/rolsbet-logo.png" alt="RolsBet" />
+        </a>
+
+        <div class="topbar-controls">
+          <label class="select-wrap">
+            <span class="sr-only" data-i18n="currencyLabel">Валюта</span>
+            <select id="currency-select" aria-label="Валюта">
+              <option value="EUR">EUR</option>
+              <option value="SOS">SOS</option>
+              <option value="EGP">EGP</option>
+              <option value="MAD">MAD</option>
+              <option value="KZT">KZT</option>
+              <option value="UZS">UZS</option>
+              <option value="KGS">KGS</option>
+              <option value="SYP">SYP</option>
+              <option value="ETB">ETB</option>
+            </select>
+          </label>
+          <label class="select-wrap language-select">
+            <span class="sr-only" data-i18n="languageLabel">Язык</span>
+            <select id="language-select" aria-label="Язык">
+              <option value="ru">RU</option>
+              <option value="en">EN</option>
+              <option value="fr">FR</option>
+              <option value="ar">AR</option>
+              <option value="uz">UZ</option>
+              <option value="tr">TR</option>
+              <option value="kk">KK</option>
+              <option value="so">SO</option>
+              <option value="it">IT</option>
+              <option value="es">ES</option>
+              <option value="de">DE</option>
+            </select>
+          </label>
+        </div>
+      </header>
+
+      <main class="hero">
+        <section class="hero-copy" aria-labelledby="hero-title">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span data-i18n="eyebrow">Welcome-бонус RolsBet</span>
+          </div>
+
+          <h1 id="hero-title" data-i18n="title">
+            Выбери бонус<br />и крути колесо
+          </h1>
+          <p class="hero-subtitle" data-i18n="subtitle">
+            Получи welcome-бонус для Казино или Спорта и переходи к регистрации.
+          </p>
+
+          <div class="mode-picker" role="tablist" aria-label="Тип бонуса">
+            <button
+              class="mode-button active"
+              id="casino-tab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              data-mode-choice="casino"
+            >
+              <span class="mode-icon" aria-hidden="true">♠</span>
+              <span data-i18n="casino">Казино</span>
+            </button>
+            <button
+              class="mode-button"
+              id="sport-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              data-mode-choice="sport"
+            >
+              <span class="mode-icon ball-icon" aria-hidden="true">●</span>
+              <span data-i18n="sport">Спорт</span>
+            </button>
+          </div>
+
+          <div class="offer-card">
+            <div class="offer-kicker" data-i18n="selectedBonus">Твой welcome-бонус</div>
+            <div class="offer-value" id="offer-value">до 1500 EUR + 150 FS</div>
+            <div class="offer-note">
+              <span class="check">✓</span>
+              <span data-i18n="instant">Результат сразу после прокрутки</span>
+            </div>
+          </div>
+
+          <button class="primary-button desktop-spin" id="spin-button" type="button">
+            <span data-i18n="spin">Крутить колесо</span>
+            <span class="button-arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="legal-note" data-i18n="legal">18+ · Играйте ответственно</p>
+        </section>
+
+        <section class="wheel-stage" aria-label="Колесо бонусов">
+          <div class="mode-badge">
+            <span class="mode-badge-icon" aria-hidden="true">♠</span>
+            <span id="mode-badge-text" data-i18n="casinoBonus">Casino bonus</span>
+          </div>
+
+          <div class="wheel-orbit orbit-one"></div>
+          <div class="wheel-orbit orbit-two"></div>
+          <div class="pointer" aria-hidden="true">
+            <span></span>
+          </div>
+
+          <div class="wheel-frame" id="wheel-frame">
+            <div class="wheel-lights" aria-hidden="true"></div>
+            <canvas id="wheel-canvas" width="760" height="760"></canvas>
+            <div class="wheel-hub" aria-hidden="true">
+              <div class="hub-crown">♛</div>
+              <span>ROLS</span>
+            </div>
+          </div>
+
+          <div class="floating-token token-a" aria-hidden="true"></div>
+          <div class="floating-token token-b" aria-hidden="true"></div>
+          <div class="floating-token token-c" aria-hidden="true"></div>
+
+          <button class="primary-button mobile-spin" id="mobile-spin-button" type="button">
+            <span data-i18n="spin">Крутить колесо</span>
+            <span class="button-arrow" aria-hidden="true">→</span>
+          </button>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="result-modal" hidden>
+      <section
+        class="result-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="result-title"
+      >
+        <button class="modal-close" type="button" data-close="result" aria-label="Закрыть">
+          ×
+        </button>
+        <div class="result-rays" aria-hidden="true"></div>
+        <div class="result-icon" aria-hidden="true">★</div>
+        <div class="result-kicker" data-i18n="youWon">Твой выигрыш</div>
+        <h2 id="result-title" data-i18n="congrats">Поздравляем!</h2>
+        <div class="result-prize" id="result-prize">до 1500 EUR + 150 FS</div>
+        <p class="result-copy" data-i18n="claim">
+          Бонус закреплен за тобой. Создай аккаунт, чтобы активировать его.
+        </p>
+        <button class="primary-button registration-button" id="registration-button" type="button">
+          <span data-i18n="register">Регистрация</span>
+          <span class="button-arrow" aria-hidden="true">→</span>
+        </button>
+        <button class="text-button" id="spin-again" type="button" data-i18n="spinAgain">
+          Крутить ещё раз
+        </button>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="registration-modal" hidden>
+      <section
+        class="registration-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="registration-title"
+      >
+        <button
+          class="modal-close"
+          type="button"
+          data-close="registration"
+          aria-label="Закрыть"
+        >
+          ×
+        </button>
+        <img class="registration-logo" src="./assets/rolsbet-logo.png" alt="RolsBet" />
+        <h2 id="registration-title" data-i18n="createAccount">Создать аккаунт</h2>
+        <p class="registration-bonus" id="registration-bonus"></p>
+        <form id="registration-form">
+          <label>
+            <span data-i18n="emailPhone">Email или телефон</span>
+            <input type="text" autocomplete="username" required placeholder="name@example.com" />
+          </label>
+          <label>
+            <span data-i18n="password">Пароль</span>
+            <input
+              type="password"
+              autocomplete="new-password"
+              minlength="8"
+              required
+              placeholder="••••••••"
+            />
+          </label>
+          <label>
+            <span data-i18n="currencyLabel">Валюта</span>
+            <select id="form-currency">
+              <option value="EUR">EUR</option>
+              <option value="SOS">SOS</option>
+              <option value="EGP">EGP</option>
+              <option value="MAD">MAD</option>
+              <option value="KZT">KZT</option>
+              <option value="UZS">UZS</option>
+              <option value="KGS">KGS</option>
+              <option value="SYP">SYP</option>
+              <option value="ETB">ETB</option>
+            </select>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" required />
+            <span data-i18n="agree">Я принимаю правила и подтверждаю, что мне исполнилось 18 лет.</span>
+          </label>
+          <button class="primary-button" type="submit">
+            <span data-i18n="create">Создать аккаунт</span>
+            <span class="button-arrow" aria-hidden="true">→</span>
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
