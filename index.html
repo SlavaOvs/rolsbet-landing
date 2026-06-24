@@ -101,14 +101,6 @@
             </button>
           </div>
 
-          <div class="offer-card">
-            <div class="offer-kicker" data-i18n="selectedBonus">Твой welcome-бонус</div>
-            <div class="offer-value" id="offer-value">до 1500 EUR + 150 FS</div>
-            <div class="offer-note">
-              <span class="check">✓</span>
-              <span data-i18n="instant">Результат сразу после прокрутки</span>
-            </div>
-          </div>
 
           <button class="primary-button desktop-spin" id="spin-button" type="button">
             <span data-i18n="spin">Крутить колесо</span>
@@ -178,64 +170,6 @@
       </section>
     </div>
 
-    <div class="modal-backdrop" id="registration-modal" hidden>
-      <section
-        class="registration-card"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="registration-title"
-      >
-        <button
-          class="modal-close"
-          type="button"
-          data-close="registration"
-          aria-label="Закрыть"
-        >
-          ×
-        </button>
-        <img class="registration-logo" src="./assets/rolsbet-logo.png" alt="RolsBet" />
-        <h2 id="registration-title" data-i18n="createAccount">Создать аккаунт</h2>
-        <p class="registration-bonus" id="registration-bonus"></p>
-        <form id="registration-form">
-          <label>
-            <span data-i18n="emailPhone">Email или телефон</span>
-            <input type="text" autocomplete="username" required placeholder="name@example.com" />
-          </label>
-          <label>
-            <span data-i18n="password">Пароль</span>
-            <input
-              type="password"
-              autocomplete="new-password"
-              minlength="8"
-              required
-              placeholder="••••••••"
-            />
-          </label>
-          <label>
-            <span data-i18n="currencyLabel">Валюта</span>
-            <select id="form-currency">
-              <option value="EUR">EUR</option>
-              <option value="SOS">SOS</option>
-              <option value="EGP">EGP</option>
-              <option value="MAD">MAD</option>
-              <option value="KZT">KZT</option>
-              <option value="UZS">UZS</option>
-              <option value="KGS">KGS</option>
-              <option value="SYP">SYP</option>
-              <option value="ETB">ETB</option>
-            </select>
-          </label>
-          <label class="checkbox-label">
-            <input type="checkbox" required />
-            <span data-i18n="agree">Я принимаю правила и подтверждаю, что мне исполнилось 18 лет.</span>
-          </label>
-          <button class="primary-button" type="submit">
-            <span data-i18n="create">Создать аккаунт</span>
-            <span class="button-arrow" aria-hidden="true">→</span>
-          </button>
-        </form>
-      </section>
-    </div>
 
     <script src="./app.js"></script>
   </body>
