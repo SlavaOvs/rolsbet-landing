@@ -322,61 +322,6 @@ body[data-mode="sport"] .mode-button.active {
   font-size: 8px;
 }
 
-.offer-card {
-  width: min(100%, 480px);
-  margin-top: 14px;
-  padding: 18px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(38, 15, 18, 0.88), rgba(14, 14, 14, 0.78));
-  backdrop-filter: blur(18px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-body[data-mode="sport"] .offer-card {
-  background: linear-gradient(135deg, rgba(34, 34, 34, 0.91), rgba(12, 12, 12, 0.82));
-}
-
-.offer-kicker {
-  color: var(--grey);
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.offer-value {
-  margin-top: 7px;
-  color: var(--white);
-  font-size: clamp(22px, 2vw, 30px);
-  font-weight: 900;
-  line-height: 1.12;
-  letter-spacing: -0.035em;
-}
-
-.offer-note {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #a8a8a8;
-  font-size: 12px;
-  line-height: 1.4;
-}
-
-.check {
-  flex: 0 0 auto;
-  width: 18px;
-  height: 18px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: rgba(255, 0, 0, 0.15);
-  color: #ff5f69;
-  font-size: 11px;
-  font-weight: 900;
-}
-
 .primary-button {
   min-height: 62px;
   border: 0;
@@ -777,8 +722,7 @@ body[data-mode="sport"] .floating-token::after {
   display: none;
 }
 
-.result-card,
-.registration-card {
+.result-card {
   position: relative;
   width: min(100%, 500px);
   overflow: hidden;
@@ -792,16 +736,13 @@ body[data-mode="sport"] .floating-token::after {
     0 0 60px rgba(255, 0, 0, 0.17),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   animation: modal-up 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  padding: 44px 46px 34px;
+  text-align: center;
 }
 
 body.modal-open .mobile-spin {
   opacity: 0;
   pointer-events: none;
-}
-
-.result-card {
-  padding: 44px 46px 34px;
-  text-align: center;
 }
 
 .result-card::before {
@@ -927,85 +868,6 @@ body.modal-open .mobile-spin {
   animation: ray-spin 18s linear infinite;
 }
 
-.registration-card {
-  padding: 40px;
-}
-
-.registration-logo {
-  width: 142px;
-  height: auto;
-  display: block;
-  margin-bottom: 26px;
-}
-
-.registration-card h2 {
-  margin: 0;
-  font-size: 34px;
-  letter-spacing: -0.04em;
-}
-
-.registration-bonus {
-  min-height: 20px;
-  margin: 9px 0 24px;
-  color: #ff727a;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.registration-card form {
-  display: grid;
-  gap: 15px;
-}
-
-.registration-card label:not(.checkbox-label) {
-  display: grid;
-  gap: 8px;
-  color: #c4c4c4;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.registration-card input,
-.registration-card select {
-  width: 100%;
-  height: 52px;
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: 14px;
-  padding: 0 15px;
-  color: white;
-  background: rgba(255, 255, 255, 0.045);
-  outline: none;
-}
-
-.registration-card input:focus,
-.registration-card select:focus {
-  border-color: rgba(255, 0, 0, 0.62);
-  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.09);
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  color: #858585;
-  font-size: 10px;
-  line-height: 1.45;
-  cursor: pointer;
-}
-
-.checkbox-label input {
-  width: 17px;
-  height: 17px;
-  flex: 0 0 auto;
-  margin: 0;
-  accent-color: var(--red);
-}
-
-.registration-card .primary-button {
-  width: 100%;
-  margin-top: 4px;
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -1037,9 +899,6 @@ body.modal-open .mobile-spin {
   text-align: right;
 }
 
-[dir="rtl"] .offer-note {
-  flex-direction: row;
-}
 
 [dir="rtl"] .select-wrap::after {
   right: auto;
@@ -1160,8 +1019,7 @@ body.modal-open .mobile-spin {
     font-size: 15px;
   }
 
-  .mode-picker,
-  .offer-card {
+  .mode-picker {
     width: min(100%, 540px);
     margin-inline: auto;
   }
@@ -1274,24 +1132,6 @@ body.modal-open .mobile-spin {
     font-size: 13px;
   }
 
-  .offer-card {
-    padding: 14px 16px;
-    border-radius: 17px;
-  }
-
-  .offer-kicker {
-    font-size: 10px;
-  }
-
-  .offer-value {
-    font-size: 20px;
-  }
-
-  .offer-note {
-    margin-top: 7px;
-    font-size: 10px;
-    justify-content: center;
-  }
 
   .wheel-stage {
     min-height: auto;
@@ -1382,20 +1222,9 @@ body.modal-open .mobile-spin {
     font-size: 12px;
   }
 
-  .registration-card {
-    padding: 34px 22px 24px;
-    border-radius: 24px;
-  }
-
-  .registration-card h2 {
-    font-size: 28px;
-  }
 }
 
 @media (max-width: 390px) {
-  .offer-note {
-    display: none;
-  }
 
   .wheel-stage {
     padding-top: 42px;

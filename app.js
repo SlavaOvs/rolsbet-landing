@@ -208,6 +208,10 @@ const BONUS_DATA = {
   },
 };
 
+const PRODUCT_URL = "https://rolsbet.com";
+const FALLBACK_CURRENCY = "EUR";
+const SUPPORTED_CURRENCIES = new Set(Object.keys(BONUS_DATA));
+
 const GEO_TO_CURRENCY = {
   so: "SOS",
   somalia: "SOS",
@@ -234,8 +238,6 @@ const I18N = {
     subtitle: "Получи welcome-бонус для Казино или Спорта и переходи к регистрации.",
     casino: "Казино",
     sport: "Спорт",
-    selectedBonus: "Твой welcome-бонус",
-    instant: "Результат сразу после прокрутки",
     spin: "Крутить колесо",
     legal: "18+ · Играйте ответственно",
     casinoBonus: "Casino bonus",
@@ -262,8 +264,6 @@ const I18N = {
     subtitle: "Get a Casino or Sports welcome bonus and continue to registration.",
     casino: "Casino",
     sport: "Sports",
-    selectedBonus: "Your welcome bonus",
-    instant: "See your result immediately",
     spin: "Spin the wheel",
     legal: "18+ · Play responsibly",
     casinoBonus: "Casino bonus",
@@ -290,8 +290,6 @@ const I18N = {
     subtitle: "Obtiens un bonus de bienvenue Casino ou Sport, puis inscris-toi.",
     casino: "Casino",
     sport: "Sport",
-    selectedBonus: "Ton bonus de bienvenue",
-    instant: "Résultat immédiat après le tour",
     spin: "Tourner la roue",
     legal: "18+ · Jouez responsablement",
     casinoBonus: "Bonus Casino",
@@ -318,8 +316,6 @@ const I18N = {
     subtitle: "احصل على مكافأة ترحيبية للكازينو أو الرياضة ثم انتقل إلى التسجيل.",
     casino: "كازينو",
     sport: "رياضة",
-    selectedBonus: "مكافأة الترحيب الخاصة بك",
-    instant: "تظهر النتيجة فور توقف العجلة",
     spin: "أدر العجلة",
     legal: "+18 · العب بمسؤولية",
     casinoBonus: "مكافأة الكازينو",
@@ -346,8 +342,6 @@ const I18N = {
     subtitle: "Kazino yoki Sport uchun welcome-bonus oling va ro‘yxatdan o‘ting.",
     casino: "Kazino",
     sport: "Sport",
-    selectedBonus: "Sizning welcome-bonusingiz",
-    instant: "Natija aylantirishdan so‘ng darhol",
     spin: "G‘ildirakni aylantirish",
     legal: "18+ · Mas’uliyat bilan o‘ynang",
     casinoBonus: "Kazino bonusi",
@@ -374,8 +368,6 @@ const I18N = {
     subtitle: "Casino veya Spor hoş geldin bonusunu al ve kayda geç.",
     casino: "Casino",
     sport: "Spor",
-    selectedBonus: "Hoş geldin bonusun",
-    instant: "Sonucu çevirir çevirmez gör",
     spin: "Çarkı çevir",
     legal: "18+ · Sorumlu oynayın",
     casinoBonus: "Casino bonusu",
@@ -402,8 +394,6 @@ const I18N = {
     subtitle: "Казино немесе Спорт welcome-бонусын алып, тіркелуге өт.",
     casino: "Казино",
     sport: "Спорт",
-    selectedBonus: "Сенің welcome-бонусың",
-    instant: "Нәтиже айналдырғаннан кейін бірден",
     spin: "Дөңгелекті айналдыру",
     legal: "18+ · Жауапкершілікпен ойнаңыз",
     casinoBonus: "Казино бонусы",
@@ -430,8 +420,6 @@ const I18N = {
     subtitle: "Hel gunno Casino ama Sport ah kadibna isdiiwaangeli.",
     casino: "Casino",
     sport: "Sport",
-    selectedBonus: "Gunnadaada soo-dhawaynta",
-    instant: "Natiijada isla markiiba arag",
     spin: "Wareeji giraangirta",
     legal: "18+ · U ciyaar si mas’uuliyad leh",
     casinoBonus: "Gunnada Casino",
@@ -458,8 +446,6 @@ const I18N = {
     subtitle: "Ottieni il bonus Casino o Sport e passa alla registrazione.",
     casino: "Casino",
     sport: "Sport",
-    selectedBonus: "Il tuo bonus di benvenuto",
-    instant: "Risultato immediato dopo il giro",
     spin: "Gira la ruota",
     legal: "18+ · Gioca responsabilmente",
     casinoBonus: "Bonus Casino",
@@ -486,8 +472,6 @@ const I18N = {
     subtitle: "Consigue un bono de Casino o Deportes y continúa al registro.",
     casino: "Casino",
     sport: "Deportes",
-    selectedBonus: "Tu bono de bienvenida",
-    instant: "Resultado inmediato después del giro",
     spin: "Girar la ruleta",
     legal: "18+ · Juega con responsabilidad",
     casinoBonus: "Bono de Casino",
@@ -514,8 +498,6 @@ const I18N = {
     subtitle: "Hol dir einen Casino- oder Sport-Willkommensbonus und registriere dich.",
     casino: "Casino",
     sport: "Sport",
-    selectedBonus: "Dein Willkommensbonus",
-    instant: "Ergebnis direkt nach dem Dreh",
     spin: "Rad drehen",
     legal: "18+ · Verantwortungsbewusst spielen",
     casinoBonus: "Casino-Bonus",
@@ -549,14 +531,25 @@ const canvas = document.querySelector("#wheel-canvas");
 const ctx = canvas.getContext("2d");
 const wheelFrame = document.querySelector("#wheel-frame");
 const resultModal = document.querySelector("#result-modal");
-const registrationModal = document.querySelector("#registration-modal");
 const currencySelect = document.querySelector("#currency-select");
 const languageSelect = document.querySelector("#language-select");
-const formCurrency = document.querySelector("#form-currency");
 const spinButtons = [
   document.querySelector("#spin-button"),
   document.querySelector("#mobile-spin-button"),
 ];
+
+function buildRegistrationUrl({ locale, bonusType, currency }) {
+  const safeLocale = I18N[locale] ? locale : "ru";
+  const safeBonusType = bonusType === "SPORT" ? "SPORT" : "CASINO";
+  const safeCurrency = SUPPORTED_CURRENCIES.has(currency) ? currency : FALLBACK_CURRENCY;
+  const params = new URLSearchParams({
+    type: "email",
+    bonus: safeBonusType,
+    currency: safeCurrency,
+  });
+
+  return `${PRODUCT_URL}/${safeLocale}/registration?${params.toString()}`;
+}
 
 function detectInitialState() {
   const params = new URLSearchParams(window.location.search);
@@ -573,7 +566,6 @@ function detectInitialState() {
   state.mode = modeParam === "sport" ? "sport" : "casino";
 
   currencySelect.value = state.currency;
-  formCurrency.value = state.currency;
   languageSelect.value = state.lang;
 }
 
@@ -754,11 +746,7 @@ function updateText() {
 function refresh() {
   updateText();
   updateModeUI();
-  const prize = getPrize();
-  document.querySelector("#offer-value").textContent = prize;
-  document.querySelector("#result-prize").textContent = prize;
-  document.querySelector("#registration-bonus").textContent = `${t("selectedBonus")}: ${prize}`;
-  formCurrency.value = state.currency;
+  document.querySelector("#result-prize").textContent = getPrize();
   drawWheel();
 }
 
@@ -798,7 +786,7 @@ async function spinWheel() {
 
 function closeModal(modal) {
   modal.hidden = true;
-  if (resultModal.hidden && registrationModal.hidden) {
+  if (resultModal.hidden) {
     document.body.style.overflow = "";
     document.body.classList.remove("modal-open");
   }
@@ -827,12 +815,6 @@ currencySelect.addEventListener("change", () => {
   updateUrlState();
 });
 
-formCurrency.addEventListener("change", () => {
-  state.currency = formCurrency.value;
-  currencySelect.value = state.currency;
-  refresh();
-  updateUrlState();
-});
 
 languageSelect.addEventListener("change", () => {
   state.lang = languageSelect.value;
@@ -848,35 +830,24 @@ document.querySelector("#spin-again").addEventListener("click", () => {
 });
 
 document.querySelector("#registration-button").addEventListener("click", () => {
-  closeModal(resultModal);
-  registrationModal.hidden = false;
-  document.body.classList.add("modal-open");
-  const bonusCode = state.mode === "casino" ? "casino_welcome" : "sport_welcome";
-  registrationModal.dataset.registrationUrl = `/registration?bonus=${bonusCode}&currency=${state.currency}`;
+  const bonusType = state.mode === "sport" ? "SPORT" : "CASINO";
+  window.location.href = buildRegistrationUrl({
+    locale: state.lang,
+    bonusType,
+    currency: state.currency,
+  });
 });
 
 document.querySelectorAll("[data-close]").forEach((button) => {
-  button.addEventListener("click", () => {
-    closeModal(button.dataset.close === "result" ? resultModal : registrationModal);
-  });
+  button.addEventListener("click", () => closeModal(resultModal));
 });
 
-[resultModal, registrationModal].forEach((modal) => {
-  modal.addEventListener("click", (event) => {
-    if (event.target === modal) closeModal(modal);
-  });
+resultModal.addEventListener("click", (event) => {
+  if (event.target === resultModal) closeModal(resultModal);
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key !== "Escape") return;
-  if (!registrationModal.hidden) closeModal(registrationModal);
-  else if (!resultModal.hidden) closeModal(resultModal);
-});
-
-document.querySelector("#registration-form").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const target = registrationModal.dataset.registrationUrl || "/registration";
-  window.location.href = target;
+  if (event.key === "Escape" && !resultModal.hidden) closeModal(resultModal);
 });
 
 window.addEventListener("resize", () => {
